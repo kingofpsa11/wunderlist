@@ -27,3 +27,17 @@
     <input type="text">
     <input type="password" name="" id="">
 </form>
+
+<div class="container-fluid" style="background:aqua">
+    <div class="row">
+        <div class="col">
+            First column
+        </div>
+        <div class="col">
+            Second
+        </div>
+        <div class="col">
+            Third
+        </div>
+    </div>
+</div>

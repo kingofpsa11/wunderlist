@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('sidebar', function () {
     return view('sidebar', ['name' => 'Ha Pham', 'result' => 'success']);
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
