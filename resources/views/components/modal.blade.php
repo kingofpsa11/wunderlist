@@ -1,0 +1,287 @@
+<div id="modal" style="display:none">
+    <ul class="reminders dialog-wrapper"></ul>
+    <div class="dialog-wrapper">
+        <div id="settings" class="dialog preferences show" style="display:none">
+            <div class="content">
+                <div class="tabs">
+                    <ul>
+                        <li>
+                            <a rel="general">
+                                <span class="icon settings-general"></span>
+                                <span class="tab-label">
+                                    General
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="account">
+                                <span class="icon settings-account"></span>
+                                <span class="tab-label">
+                                    Account
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="shortcuts">
+                                <span class="icon settings-shortcuts"></span>
+                                <span class="tab-label">
+                                    Shortcuts
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="smart_lists">
+                                <span class="icon settings-smart-lists"></span>
+                                <span class="tab-label">
+                                    Smart Lists
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="notifications">
+                                <span class="icon settings-notification"></span>
+                                <span class="tab-label">
+                                    Notification
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="about">
+                                <span class="icon settings-about"></span>
+                                <span class="tab-label">
+                                    About
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="settings-content-inner-wrapper">
+                    <div class="settings-content-inner-general">
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Language</div>
+                                <div class="col-40">
+                                    <span class="select">
+                                        <select id="edit-language" class="tabStart">
+                                            <option value="en" >English</option>
+                                            <option value="po" >Portugues(Brazil)</option>                                                    
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Date Format</div>
+                                <div class="col-40">
+                                    <span class="select">
+                                        <select id="edit-date-format" class="tabStart">
+                                            <option value="DD.MM.YYYY" selected="">DD.MM.YYYY</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                            <option value="YYYY/MM/DD">YYYY/MM/DD</option>
+                                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Date Format</div>
+                                <div class="col-40">
+                                    <div>
+                                        <input type="radio" name="edit-time-format" value="12 hour" id="edit-time-format-12">
+                                        <label for="edit-time-format-12" style="font-size:13px;">12 Hours</label>
+                                        <input type="radio" name="edit-time-format" value="24 hour" id="edit-time-format-24">
+                                        <label for="edit-time-format-24" style="font-size:13px;">24 Hours</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Start of the Week</div>
+                                <div class="col-40">
+                                    <span class="select">
+                                        <select id="edit-start-of-week" class="tabStart">
+                                            <option value="sat">Saturday</option>
+                                            <option value="sun">Sunday</option>
+                                            <option value="mon">Monday</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Enable sound for checking-off a to-do</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Enable sound for checking-off a to-do</div>
+                                <div class="col-40">
+                                        <div class="checkbox">
+                                            <input type="checkbox" name="" id="">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Add To-dos</div>
+                                <div class="col-40">
+                                    <span class="select">
+                                        <select id="edit-new-task-location" class="tabStart">
+                                            <option value="top">Top of List</option>
+                                            <option value="bottom">Bottom of List</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Confirm before deleting to-dos</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Star moves to-do to top</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Enable smart due dates</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                <div class="col-60 text-right">Remove smart due date text in to-dos</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Print completed to-dos</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="separator">
+                            <div class="cols">
+                                <div class="col-60 text-right">Show Subtask progress on to-dos</div>
+                                <div class="col-40">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="" id="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cols">
+                                    <div class="col-60 text-right">Enable context menus</div>
+                                    <div class="col-40">
+                                        <div class="checkbox">
+                                            <input type="checkbox" name="" id="">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-footer">
+                <div class="cols">
+                    <div class="col-40"></div>
+                    <div class="col-40"></div>
+                    <div class="col-20">
+                        <button class="full blue close">
+                            Done
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog listOptions" style="display:none">
+            <div class="content">
+                <div class="content-header">
+                    <h3 class="center">
+                        Create New List
+                    </h3>
+                    <div class="seperator">
+                        <input type="text" placeholder="List Name" class="listOptions-title">
+                    </div>
+                    <div class="seperator">
+                        <ul class="content-tab">
+                            <li>
+                                <a class="active">
+                                    list members
+                                </a>
+                            </li>
+                            <li>
+                                <a >
+                                    list options
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="seperator">
+                        <div class="input-fake">
+                            <input type="text" class="chromeless hasIcon" placeholder="Name or email address...">
+                            <svg class="share rtl-flip" width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <g stroke="none" stroke-width="1" fill-rule="evenodd"> <g id="share"> <path d="M11.5025,12 C13.7825,12 15.5025,8.84 15.5025,6 C15.5025,3.8 13.7025,2 11.5025,2 C9.3025,2 7.5025,3.8 7.5025,6 C7.5025,8.5 9.0225,12 11.5025,12 L11.5025,12 Z M11.5025,3 C13.1625,3 14.5025,4.34 14.5025,6 C14.5025,8.26 13.1225,11 11.5025,11 C9.8425,11 8.5025,8.26 8.5025,6 C8.5025,4.34 9.8425,3 11.5025,3 L11.5025,3 Z M4.5025,10 L6.0025,10 C6.2825,10 6.5025,9.78 6.5025,9.5 C6.5025,9.22 6.2825,9 6.0025,9 L4.5025,9 L4.5025,7.5 C4.5025,7.22 4.2825,7 4.0025,7 C3.7225,7 3.5025,7.22 3.5025,7.5 L3.5025,9 L2.0025,9 C1.7225,9 1.5025,9.22 1.5025,9.5 C1.5025,9.78 1.7225,10 2.0025,10 L3.5025,10 L3.5025,11.5 C3.5025,11.78 3.7225,12 4.0025,12 C4.2825,12 4.5025,11.78 4.5025,11.5 L4.5025,10 Z M18.2625,14.88 C18.0625,14 17.4025,13.28 16.5225,13.04 L14.2225,12.36 C14.0825,12.32 13.9625,12.26 13.8625,12.14 C13.6625,11.96 13.3425,11.96 13.1625,12.16 C12.9625,12.34 12.9625,12.66 13.1625,12.86 C13.3825,13.08 13.6425,13.24 13.9425,13.32 L16.2425,14 C16.7625,14.14 17.1625,14.58 17.2825,15.1 L17.4425,15.8 C16.9025,16.16 15.2025,17 11.5025,17 C7.7825,17 6.1025,16.14 5.5625,15.8 L5.7225,15.04 C5.8425,14.5 6.2625,14.06 6.8025,13.92 L9.0425,13.32 C9.3425,13.24 9.6225,13.08 9.8625,12.86 C10.0425,12.66 10.0425,12.34 9.8625,12.14 C9.6625,11.96 9.3425,11.96 9.1425,12.14 C9.0425,12.24 8.9225,12.32 8.7825,12.36 L6.5425,12.96 C5.6425,13.2 4.9625,13.92 4.7425,14.82 L4.5225,15.9 C4.4825,16.06 4.5225,16.24 4.6425,16.36 C4.7225,16.42 6.3625,18 11.5025,18 C16.6425,18 18.2825,16.42 18.3625,16.36 C18.4825,16.24 18.5225,16.06 18.4825,15.9 L18.2625,14.88 Z" id="W"></path> </g> </g> </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab members">
+                    <div class="content-inner members">
+                        <ul class="content-people">
+                            <li>
+                                <span>
+                                    <div class="avatar medium" title="Joey Tribbiani">
+                                        <img src="icons/user-icon.png">
+                                    </div>
+                                </span>
+                                    
+                                <div class="content-people-meta">
+                                    <div class="content-people-name">
+                                        <span class="content-people-name-label">Joey Tribbiani</span>
+                                        <div class="content-people-name-badge">
+                                            <span class="badge blue">Owner</span>
+                                        </div>
+                                    </div>
+                                    <div class="content-people-email">
+                                        phammanhha305@gmail.com
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-footer">
+                    <div class="cols">
+                        <div class="col-40"></div>
+                        <div class="col-30">
+                            <button class="full">Cancel</button>
+                        </div>
+                        <div class="col-30">
+                            <button class="cancel full blue">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
