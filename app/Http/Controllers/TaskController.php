@@ -35,7 +35,19 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $task = new Task();
+        // $task->title = $request->title;
+        // $task->list_task_id = (int)$request->list_task_id;
+        // $task->status = 1;
+        // $task->save();
+        return $request->title;
+
+        // $task = new Task::create([
+        //     'title' => $request->title,
+        //     'list_task_id' => $request->list_task_id
+        // ]);
+        // echo $task->id;
+        
     }
 
     /**

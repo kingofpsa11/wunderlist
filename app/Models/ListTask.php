@@ -8,7 +8,7 @@ class ListTask extends Model
 {
     protected $fillable = ['id', 'title'];
 
-    public $timestamp = true;
+    public $timestamps = true;
 
     public function tasks()
     {

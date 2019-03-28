@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('sidebar', function () {
     return view('sidebar', ['name' => 'Ha Pham', 'result' => 'success']);
 });
+
+Route::resource('list', 'ListTaskController');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

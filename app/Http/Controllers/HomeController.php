@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ListTask;
+use App\Models\Task;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // return view('home');
+        $tasks = Task::all();
+        $lists = ListTask::all();
+        return view('index')->with(['lists' => $lists, 'tasks' => $tasks]);
     }
 }
