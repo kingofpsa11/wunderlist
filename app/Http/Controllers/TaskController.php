@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -35,12 +35,12 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        // $task = new Task();
-        // $task->title = $request->title;
-        // $task->list_task_id = (int)$request->list_task_id;
-        // $task->status = 1;
-        // $task->save();
-        return $request->title;
+        $task = new Task();
+        $task->title = $request->title;
+        $task->list_task_id = (int)$request->list_task_id;
+        $task->status = 1;
+        $task->save();
+        return $task->id;
 
         // $task = new Task::create([
         //     'title' => $request->title,
@@ -58,7 +58,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return response()->json($task, 200);
     }
 
     /**

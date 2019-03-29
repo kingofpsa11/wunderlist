@@ -71,34 +71,21 @@ $(document).ready(function () {
         })
         let title = $(this).val()
         const list_task_id = $('.sidebarItem.active').attr('rel')
-        const list_task = list_task_id.valueOf();
         let taskItem = $('ol.tasks:first .taskItem:first').clone()
         $(this).val('')
 
         $.ajax({
           type: "POST",
-          url: "/list",
-          data: { title: title, list_task_id: list_task },
+          url: "/task",
+          data: { title: title, list_task_id: list_task_id },
           dataType: "text",
           success: function (id) {
-            console.log(id)
             taskItem.find('.taskItem-titleWrapper').text(title)
             taskItem.find('.taskItem-duedate').text('')
             taskItem.attr("rel", id)
             $('ol.tasks:first').append(taskItem)
           }
         });
-        // $.post("/list", { title: title, list_task_id: list_task_id },
-        //   function (id) {
-        //     console.log(id)
-        //     taskItem.find('.taskItem-titleWrapper').text(title)
-        //     taskItem.find('.taskItem-duedate').text('')
-        //     taskItem.attr("rel", id)
-        //     $('ol.tasks:first').append(taskItem)
-        //   },
-        //   "text"
-        // )
-  
       }
     });
   
@@ -137,11 +124,16 @@ $(document).ready(function () {
         $('.selected').removeClass('selected')
         $(this).addClass('selected')
   
-        $.get("Request.php", { taskId: id },
+        $.get("task/" + id,
           function (data) {
-  
+            console.log(data)
+            //title
+            $('#detail .top .display-view').text(data['title'])
+
             //duedate
-            convertDate(data['due_date'])
+            let due_date = (new Date(data['duedate'])).getTime()
+            console.log('duedate: ' + due_date)
+            convertDate(due_date)
   
             //reminder date
             $('.detail-reminder .section-title').text(data['reminder_date'])
@@ -149,25 +141,25 @@ $(document).ready(function () {
             //subtasks
             const ul = $('.subtasks ul')
             ul.html('')
-            if (data['sub_tasks'].length > 0) {
-              let subtasks = data['sub_tasks']
-              $.get("Request.php", { li: '' },
-                function (data) {
-                  const liItem = $(data)
-                  for (let index = 0; index < subtasks.length; index++) {
-                    const subtask = subtasks[index]
-                    let el = liItem.clone()
-                    el.find('.display-view span').text(subtask[0])
-                    if (subtask[1] == 0) {
-                      el.addClass("done")
-                      el.find('.checkBox').addClass('checked')
-                    }
-                    ul.append(el)
-                  }
-                },
-                "text"
-              )
-            }
+            // if (.length > 0) {
+            //   let subtasks = data['sub_tasks']
+            //   $.get("Request.php", { li: '' },
+            //     function (data) {
+            //       const liItem = $(data)
+            //       for (let index = 0; index < subtasks.length; index++) {
+            //         const subtask = subtasks[index]
+            //         let el = liItem.clone()
+            //         el.find('.display-view span').text(subtask[0])
+            //         if (subtask[1] == 0) {
+            //           el.addClass("done")
+            //           el.find('.checkBox').addClass('checked')
+            //         }
+            //         ul.append(el)
+            //       }
+            //     },
+            //     "text"
+            //   )
+            // }
           },
           "json"
         );

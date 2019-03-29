@@ -19,6 +19,7 @@ Route::get('sidebar', function () {
 
 Route::resource('list', 'ListTaskController');
 
+Route::resource('task', 'TaskController');
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
