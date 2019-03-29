@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ListTask extends Model
 {
-    protected $fillable = ['id', 'title'];
+    protected $fillable = ['id', 'title', 'user_id'];
 
     public $timestamps = true;
 

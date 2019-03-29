@@ -80,6 +80,7 @@ $(document).ready(function () {
           data: { title: title, list_task_id: list_task_id },
           dataType: "text",
           success: function (id) {
+            console.log(id)
             taskItem.find('.taskItem-titleWrapper').text(title)
             taskItem.find('.taskItem-duedate').text('')
             taskItem.attr("rel", id)
@@ -126,13 +127,11 @@ $(document).ready(function () {
   
         $.get("task/" + id,
           function (data) {
-            console.log(data)
             //title
             $('#detail .top .display-view').text(data['title'])
 
             //duedate
             let due_date = (new Date(data['duedate'])).getTime()
-            console.log('duedate: ' + due_date)
             convertDate(due_date)
   
             //reminder date
