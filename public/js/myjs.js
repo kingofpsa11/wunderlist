@@ -100,8 +100,14 @@ $(document).ready(function () {
       e.stopPropagation()
       let taskItem = $(this).parents('.taskItem')
       let id = taskItem.attr('rel')
-      let status = taskItem.hasClass('done') ? 0 : 1
-      $.post("Request.php", { checkTask: id, status: status },
+
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      })
+
+      $.post("task/" + id, { _method: "PUT" },
         function (data) {
           if (taskItem.hasClass("done")) {
             taskItem.removeClass("done")
@@ -246,9 +252,21 @@ $(document).ready(function () {
       $('.detail-date-input').datepicker({
         showButtonPanel: true,
         onSelect: function () {
-          let detail_date = $(this).datepicker("getDate").getTime() / 1000
-          let taskItem_id = $('.selected').attr("rel")
-          $.post("Request.php", { detail_date_id: taskItem_id, detail_date: detail_date },
+          let detail_date = new Date($(this).datepicker("getDate").getTime())
+          let month = detail_date.getMonth() + 1
+          let year = detail_date.getFullYear()
+          let day = detail_date.getDate()
+          detail_date = year + '-' + ('0' + month).slice(-2) + '-' + ( '0' + day).slice(-2)
+
+          let id = $('.selected').attr("rel")
+
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          })
+
+          $.post("task/" + id, { datepicker: detail_date, _method: "PUT" },
             function () {
               convertDate(detail_date)
               $('.selected .taskItem-duedate').text(convertDateToVn(detail_date))
@@ -263,6 +281,7 @@ $(document).ready(function () {
     $('.taskItem').each(function () {
       let duedate = $(this).find('.taskItem-duedate').text()
       if (duedate != '') {
+        duedate = (new Date(duedate)).getTime()
         duedate = convertDateToVn(duedate)
         $(this).find('.taskItem-duedate').text(duedate)
       }
@@ -270,7 +289,7 @@ $(document).ready(function () {
   
     function convertDate(timestamp) {
       if (timestamp != null) {
-        timestamp = new Date(timestamp * 1000)
+        timestamp = new Date(timestamp)
         let dateString
         let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -294,7 +313,7 @@ $(document).ready(function () {
     // }
   
     function convertDateToVn(timestamp) {
-      timestamp = new Date(timestamp * 1000)
+      timestamp = new Date(timestamp)
       let dateString
       let date = timestamp.getDate()
       let month = timestamp.getMonth() + 1

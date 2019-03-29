@@ -81,7 +81,20 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        if ($request->has('datepicker')) {
+            $task->duedate = $request->datepicker;
+            $task->save();
+        } else {
+            if ($task->status == 0) {
+                $task->status = 1;
+                $task->save();
+                return view('components.tasks.checkbox');
+            } else {
+                $task->status = 0;
+                $task->save();
+                return view('components.tasks.completedcheckbox');
+            }
+        }
     }
 
     /**
