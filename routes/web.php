@@ -27,5 +27,11 @@ Auth::routes();
 Route::get('modal/{name}', function ($name) {
     if ($name == 'addList') {
         return view('components.modals.createlist');
+    } elseif ($name == 'accountSettings') {
+        return view('components.modals.usersetting');
     }
+});
+
+Route::get('sidebar', function () {
+    return view('components.navigation.sidebar.sidebaritem');
 });

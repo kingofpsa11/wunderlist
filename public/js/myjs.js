@@ -6,31 +6,7 @@ $(document).ready(function () {
       $('#user-popover').toggle();
     });
   
-    //Display modal
-    $('#account-settings').click(function (e) {
-      e.preventDefault();
-      $('#modal').show();
-      $('#modal').find('.preferences').show()
-      $('#user-popover').hide();
-    });
-  
-    //Click button Done hide modal
-    $('button.full').click(function (e) {
-      e.preventDefault()
-      $('#modal').hide()
-  
-      if ($('.listOptions-title')) {
-        let listName = $('.listOptions-title').val()
-        if (listName != '') {
-          $.post("Request.php", { addListName: listName },
-            function () {
-              $('.lists-collection').load('index.php .lists-collection')
-            }
-          );
-        }
-  
-      }
-    });
+    
   
     //Active tab in modal
     $('#modal li').on("click", function () {
@@ -40,18 +16,68 @@ $(document).ready(function () {
       }
     })
   
+    //Display modal
+    $('#account-settings').click(function (e) {
+      e.preventDefault()
+      $.ajax({
+        type: "GET",
+        url: "modal/accountSettings",
+        dataType: "html",
+        success: function (response) {
+          $('#modal').append(response)
+          $('#modal').show()
+          $('#user-popover').hide()
+        }
+      })
+    })
+
+    //Click button Done hide modal
+    $('button.full').click(function (e) {
+      // e.preventDefault()
+      $('#modal').hide()
+      
+      if ($('.listOptions-title').length) {
+        console.log($('.listOptions-title'))
+        let title = $('.listOptions-title').val()
+        if (title != '') {
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          })
+
+          $.post("list", { title: title },
+            function (id) {
+              $.get("sidebar",
+                function (sidebar) {
+                  let sidebarItem = $.parseHTML(sidebar)
+                  sidebarItem.attr("rel", id)
+                  sidebarItem.find('.title').text(title)
+                  $('.lists-collection').append(sidebarItem)
+                },
+                "html"
+              );
+            },
+            "text"
+          )
+        }
+  
+      }
+    });
+
     // Create List in modal list
     // Change List Name
-    $('.seperator input:first').on("keyup", function () {
+    $('#modal').on("keyup", 'input.listOptions-title',function () {
       if ($(this).val() != '') {
         $(this).parents('.content').find('button.blue').removeClass("cancel")
       } else {
+        console.log(123)
         $(this).parents('.content').find('button.blue').addClass("cancel")
       }
     })
   
     // Create New List
-    $('.sidebarActions-addList').on('click', function (e) {
+    $('.sidebarActions-addList').on('click', function () {
       $.ajax({
         type: "GET",
         url: "modal/addList",

@@ -35,7 +35,11 @@ class ListTaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $listTask = new ListTask();
+        $listTask->title = $request->title;
+        $listTask->user_id = 1;
+        $listTask->save();
+        return $listTask->id;
     }
 
     /**
