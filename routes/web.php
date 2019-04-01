@@ -1,4 +1,5 @@
 <?php
+use App\Models\ListTask;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,8 @@ Route::resource('task', 'TaskController');
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+Route::get('modal/{name}', function ($name) {
+    if ($name == 'addList') {
+        return view('components.modals.createlist');
+    }
+});

@@ -12,6 +12,6 @@ class Task extends Model
 
     public function list_tasks()
     {
-        return $this->belongsTo('App\ListTask');
+        return $this->belongsTo('App\Models\ListTask');
     }
 }

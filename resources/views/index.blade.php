@@ -36,7 +36,7 @@
                     
                 @endcomponent
 
-                @component('components.navigation.listscroll')
+                @component('components.navigation.listscroll', ['lists' => $lists])
                     
                 @endcomponent
 

@@ -50,9 +50,17 @@ $(document).ready(function () {
       }
     })
   
-    // Save New Name of List
+    // Create New List
     $('.sidebarActions-addList').on('click', function (e) {
-  
+      $.ajax({
+        type: "GET",
+        url: "modal/addList",
+        dataType: "html",
+        success: function (response) {
+          $('#modal').append(response)
+          $('#modal').show()
+        }
+      });
     })
   
     //Display more tab
