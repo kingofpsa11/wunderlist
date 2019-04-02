@@ -32,12 +32,11 @@ $(document).ready(function () {
     })
 
     //Click button Done hide modal
-    $('button.full').click(function (e) {
+    $('#modal').on("click", 'button.full', function (e) {
       // e.preventDefault()
       $('#modal').hide()
-      
+
       if ($('.listOptions-title').length) {
-        console.log($('.listOptions-title'))
         let title = $('.listOptions-title').val()
         if (title != '') {
           $.ajaxSetup({
@@ -46,32 +45,23 @@ $(document).ready(function () {
             }
           })
 
-          $.post("list", { title: title },
-            function (id) {
-              $.get("sidebar",
-                function (sidebar) {
-                  let sidebarItem = $.parseHTML(sidebar)
-                  sidebarItem.attr("rel", id)
-                  sidebarItem.find('.title').text(title)
-                  $('.lists-collection').append(sidebarItem)
-                },
-                "html"
-              );
+          $.post("list", { title: title, _method: "POST" },
+            function (sidebar) {
+              let sidebarItem = $.parseHTML(sidebar)
+              $('.lists-collection').append(sidebarItem)
             },
-            "text"
+            "html"
           )
         }
-  
       }
     });
 
-    // Create List in modal list
+    // Create List in modal
     // Change List Name
     $('#modal').on("keyup", 'input.listOptions-title',function () {
       if ($(this).val() != '') {
         $(this).parents('.content').find('button.blue').removeClass("cancel")
       } else {
-        console.log(123)
         $(this).parents('.content').find('button.blue').addClass("cancel")
       }
     })
@@ -114,7 +104,6 @@ $(document).ready(function () {
           data: { title: title, list_task_id: list_task_id },
           dataType: "text",
           success: function (id) {
-            console.log(id)
             taskItem.find('.taskItem-titleWrapper').text(title)
             taskItem.find('.taskItem-duedate').text('')
             taskItem.attr("rel", id)
@@ -237,33 +226,51 @@ $(document).ready(function () {
     });
   
     //Change right click context  
-    $('.tasks').one('contextmenu', '.taskItem', function (e) {
+    $('.tasks').on('contextmenu', '.taskItem', function (e) {
+      
       e.preventDefault()
       const contextmenu = $('.context-menu')
       contextmenu.css({ "left": e.clientX, "top": e.clientY })
       contextmenu.show()
-  
+      console.log(this)
       //Check completed tasks
       const taskItem = $(this)
-      contextmenu.on('click', '.context-menu-item:first', function (e) {
-        taskItem.appendTo($('.tasks:last'))
-        taskItem.addClass("done")
-        taskItem.find('.taskItem-checkboxWrapper').remove()
-        $('.tasks:last .taskItem-checkboxWrapper:first').clone().prependTo(taskItem.children('.taskItem-body'))
-  
+      contextmenu.one('click', '.context-menu-item:first', function () {
+        // console.log(taskItem)
+        console.log($('.context-menu-item:first'))
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+
         let id = taskItem.attr("rel")
-        $.post("tasks.php", { rel_id_done: id })
-      });
-    });
+        $.post("task/" + id, { _method: "PUT" },
+          function (data) {
+            if (taskItem.hasClass("done")) {
+              taskItem.removeClass("done")
+              taskItem.find('.taskItem-checkboxWrapper').replaceWith(data)
+              taskItem.appendTo($('ol:first'))
+            } else {
+              taskItem.addClass("done")
+              taskItem.find('.taskItem-checkboxWrapper').replaceWith(data)
+              taskItem.appendTo($('ol:last'))
+            }
+          },
+          "html"
+        )
+      })
+    })
+
     $(window).on('click', function () {
       const contextmenu = $('.context-menu')
       contextmenu.hide()
     });
   
     //Click on context menu
-    $('.context-menu').on('click', '.context-menu-item:first', function (e) {
-      e.preventDefault()
-    });
+    // $('.context-menu').on('click', '.context-menu-item:first', function (e) {
+    //   e.preventDefault()
+    // });
   
     //Click active sidebarItem
     $('.lists-scroll').on('click', '.sidebarItem', function () {

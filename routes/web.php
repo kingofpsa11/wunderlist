@@ -32,6 +32,3 @@ Route::get('modal/{name}', function ($name) {
     }
 });
 
-Route::get('sidebar', function () {
-    return view('components.navigation.sidebar.sidebaritem');
-});

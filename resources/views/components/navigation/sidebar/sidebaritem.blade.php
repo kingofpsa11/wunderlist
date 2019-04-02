@@ -1,3 +1,4 @@
+@if (isset($list))
 <li class="sidebarItem owner list draggable" rel="{{ $list->id }}">
     <a>
         <span class="list-icon">
@@ -8,3 +9,4 @@
         <span class="count"></span>
     </a>
 </li>
+@endif

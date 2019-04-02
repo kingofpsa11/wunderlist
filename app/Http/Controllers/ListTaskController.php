@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ListTask;
+use App\Models\ListTask;
 use Illuminate\Http\Request;
 
 class ListTaskController extends Controller
@@ -39,7 +39,7 @@ class ListTaskController extends Controller
         $listTask->title = $request->title;
         $listTask->user_id = 1;
         $listTask->save();
-        return $listTask->id;
+        return view('components.navigation.sidebar.sidebaritem')->with('list', $listTask);
     }
 
     /**
