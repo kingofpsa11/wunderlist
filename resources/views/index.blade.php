@@ -102,18 +102,31 @@
                     <!-- <h2 class="heading normal">
                         <a class="groupHeader">Inbox</a>
                     </h2> -->
-                    
-                    @component('components.tasks.task', ['tasks' => $tasks, 'lists' => $lists])
+                    <ol class="tasks">
+                        @if ($tasks!==null)
+                            @foreach ($tasks as $task)
+                                @if ($task->status === 1)
+                                    @component('components.tasks.task', ['task' => $task])
                         
-                    @endcomponent
-
+                                    @endcomponent
+                                @endif
+                            @endforeach
+                        @endif
+                    </ol>
                     <h2 class="heading normal">
                         <a class="groupHeader">Show completed to-dos</a>
                     </h2>
-
-                    @component('components.tasks.completedtask', ['tasks' => $tasks, 'lists' => $lists])
-                        
-                    @endcomponent
+                    <ol class="tasks">
+                            @if ($tasks!==null)
+                                @foreach ($tasks as $task)
+                                    @if ($task->status === 0)
+                                        @component('components.tasks.completedtask', ['task' => $task])
+                                            
+                                        @endcomponent
+                                    @endif
+                            @endforeach
+                        @endif
+                    </ol>
                 </div>
             </div>
         </div>

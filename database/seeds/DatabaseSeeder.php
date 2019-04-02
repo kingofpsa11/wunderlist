@@ -11,6 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        DB::table('list_tasks')->insert(
+            [
+                [
+                    'title' => 'Inbox',
+                    'user_id' => 1
+                ],
+                [
+                    'title' => 'Work',
+                    'user_id' => 1
+                ]
+            ]
+        );
     }
 }

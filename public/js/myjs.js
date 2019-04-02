@@ -225,19 +225,17 @@ $(document).ready(function () {
       }
     });
   
-    //Change right click context  
+    // Change right click context
     $('.tasks').on('contextmenu', '.taskItem', function (e) {
       
       e.preventDefault()
       const contextmenu = $('.context-menu')
       contextmenu.css({ "left": e.clientX, "top": e.clientY })
       contextmenu.show()
-      console.log(this)
+
       //Check completed tasks
       const taskItem = $(this)
-      contextmenu.one('click', '.context-menu-item:first', function () {
-        // console.log(taskItem)
-        console.log($('.context-menu-item:first'))
+      contextmenu.off('click').on('click', '.context-menu-item:first', function () {
         $.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -267,11 +265,6 @@ $(document).ready(function () {
       contextmenu.hide()
     });
   
-    //Click on context menu
-    // $('.context-menu').on('click', '.context-menu-item:first', function (e) {
-    //   e.preventDefault()
-    // });
-  
     //Click active sidebarItem
     $('.lists-scroll').on('click', '.sidebarItem', function () {
       if (!$(this).is('.sidebarItem.active')) {
@@ -280,12 +273,35 @@ $(document).ready(function () {
       }
   
       let title = $(this).find('.title').text()
+      let id = $(this).attr('rel')
+
       $('#list-toolbar').children('h1.title').text(title)
-      let taskScroll = $('.task-scroll')
+      let taskScroll = $('.task-list')
       taskScroll.removeClass()
-      taskScroll.addClass('task-scroll ' + $(this).attr('rel'))
+      taskScroll.addClass('task-list ' + $(this).attr('rel'))
   
-  
+      $.get("task/" + id,
+        function (tasks) {
+          console.log(tasks)
+          // tasks.forEach(task => {
+          //   console.log(task->id)
+      //       $.get("taskItem/" + task->id,
+      //         function (data) {
+      //           console.log(data)
+      //         },
+      //         "html"
+            // );  
+          });
+          
+          // $.get("taskItemCompleted/" + tasks,
+          //   function (data) {
+          //     $('ol:last').replaceWith($.parseHTML(data))
+          //   },
+          //   "html"
+          // );
+      //   },
+      //   "json"
+      // );
     });
   
     //Date picker detail_date
@@ -378,6 +394,7 @@ $(document).ready(function () {
         "json"
       );
     }
+
     // if (detail_date.getFullYear() < now.getFullYear()) {
     //   detail_date_el.addClass("overdue")
     // } else if (detail_date.getFullYear() == now.getFullYear()) {
@@ -460,7 +477,6 @@ $(document).ready(function () {
     //Click to logout
     $('.logout').on('click', function (e) {
       document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-      document.cookie = "password=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
       window.location.href = "http://localhost/wunderlist-sass-file/login.php"
     })
   

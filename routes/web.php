@@ -20,7 +20,10 @@ Route::get('sidebar', function () {
 
 Route::resource('list', 'ListTaskController');
 
+Route::get('task/{list_id}', 'TaskController@index');
 Route::resource('task', 'TaskController');
+
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
@@ -30,5 +33,15 @@ Route::get('modal/{name}', function ($name) {
     } elseif ($name == 'accountSettings') {
         return view('components.modals.usersetting');
     }
+});
+
+Route::get('taskItem/{id}', function ($id) {
+    $task = App\Models\Task::find($id);
+    return view('components.tasks.task')->with('task', $task);
+});
+
+Route::get('taskItemCompleted/{id}', function ($id) {
+    $task = App\Models\Task::find($id);
+    return view('components.tasks.completedtask')->with('task', $task);
 });
 
