@@ -20,7 +20,11 @@ Route::get('sidebar', function () {
 
 Route::resource('list', 'ListTaskController');
 
-Route::get('task/{list_id}', 'TaskController@index');
+Route::get('tasks/{list_id}', function ($list_id) {
+    $tasks = Task::where('list_task_id', $list_id)->get();
+    return $tasks->toJson();
+});
+
 Route::resource('task', 'TaskController');
 
 
@@ -45,3 +49,6 @@ Route::get('taskItemCompleted/{id}', function ($id) {
     return view('components.tasks.completedtask')->with('task', $task);
 });
 
+Route::get('subtaskItem', function(){
+    return view('components.detail.subtask');
+});

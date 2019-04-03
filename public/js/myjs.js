@@ -153,8 +153,14 @@ $(document).ready(function () {
       if (!$(this).hasClass('selected')) {
         $('.selected').removeClass('selected')
         $(this).addClass('selected')
-  
-        $.get("task/" + id,
+        
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
+
+        $.get("task/" + id, { _method: "GET" },
           function (data) {
             //title
             $('#detail .top .display-view').text(data['title'])
@@ -273,35 +279,41 @@ $(document).ready(function () {
       }
   
       let title = $(this).find('.title').text()
-      let id = $(this).attr('rel')
+      let list_id = $(this).attr('rel')
 
       $('#list-toolbar').children('h1.title').text(title)
       let taskScroll = $('.task-list')
       taskScroll.removeClass()
       taskScroll.addClass('task-list ' + $(this).attr('rel'))
-  
-      $.get("task/" + id,
+      $('ol.tasks').html('')
+
+      $.get("task/" + list_id,
         function (tasks) {
-          console.log(tasks)
-          // tasks.forEach(task => {
-          //   console.log(task->id)
-      //       $.get("taskItem/" + task->id,
-      //         function (data) {
-      //           console.log(data)
-      //         },
-      //         "html"
-            // );  
+          tasks = $.parseJSON(tasks)
+
+          tasks.forEach(task => {
+            if (task.status === 1) {
+              $.get("taskItem/" + task.id,
+                function (taskItem) {
+                  taskItem = $.parseHTML(taskItem)
+                  $('ol.tasks:first').append(taskItem)
+                },
+                "html"
+              );
+
+            } else {
+              $.get("taskItemCompleted/" + task.id,
+                function (taskItem) {
+                  taskItem = $.parseHTML(taskItem)
+                  $('ol.tasks:last').append(taskItem)
+                },
+                "html"
+              );
+
+            }
+
           });
-          
-          // $.get("taskItemCompleted/" + tasks,
-          //   function (data) {
-          //     $('ol:last').replaceWith($.parseHTML(data))
-          //   },
-          //   "html"
-          // );
-      //   },
-      //   "json"
-      // );
+        });
     });
   
     //Date picker detail_date
@@ -444,12 +456,25 @@ $(document).ready(function () {
         let taskItem_id = $('.selected').attr('rel')
         let subtaskTitle = $(this).val()
         let ul = $(this).parents('.subtasks').children('ul')
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        })
         if ($(this).val() != '') {
-          $.post("Request.php", { id: taskItem_id, addSubTask: subtaskTitle },
-            function (data) {
-              data = $(data)
-              data.find('.display-view span').text(subtaskTitle)
-              ul.append(data)
+          $.post("subtask", { _method: "POST", title: subtaskTitle },
+            function (id) {
+              console.log(id)
+              let subtask
+              $.get("subtaskItem",
+                function (subtaskItem) {
+                  subtask = $(subtaskItem)
+                  subtask.find('.display-view span').text(subtaskTitle)
+                  subtask.find('.section-item.subtask').attr("rel", id)
+                  ul.append(subtask)
+                },
+                "html"
+              )
             },
             "html"
           );

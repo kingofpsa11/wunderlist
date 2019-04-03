@@ -12,10 +12,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($list_id)
+    public function index()
     {
-        $tasks = Task::where('list_task_id', $list_id)->get();
-        return $tasks->toJson();
+        
     }
 
     /**

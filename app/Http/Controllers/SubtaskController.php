@@ -35,7 +35,10 @@ class SubtaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subtask = new Subtask();
+        $subtask->title = $request->title;
+        $subtask->save();
+        return $subtask->id;
     }
 
     /**
