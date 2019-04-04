@@ -148,7 +148,7 @@ $(document).ready(function () {
   
     //Selected task
     $('.tasks').on('click', '.taskItem', function () {
-      let id = $(this).attr('rel')
+      let task_id = $(this).attr('rel')
   
       if (!$(this).hasClass('selected')) {
         $('.selected').removeClass('selected')
@@ -160,40 +160,47 @@ $(document).ready(function () {
           }
         })
 
-        $.get("task/" + id, { _method: "GET" },
-          function (data) {
+        $.get("task/" + task_id, { _method: "GET" },
+          function (task) {
             //title
-            $('#detail .top .display-view').text(data['title'])
+            $('#detail .top .display-view').text(task['title'])
 
             //duedate
-            let due_date = (new Date(data['duedate'])).getTime()
+            let due_date = (new Date(task['duedate'])).getTime()
             convertDate(due_date)
   
             //reminder date
-            $('.detail-reminder .section-title').text(data['reminder_date'])
+            $('.detail-reminder .section-title').text(task['reminder_date'])
   
             //subtasks
             const ul = $('.subtasks ul')
             ul.html('')
-            // if (.length > 0) {
-            //   let subtasks = data['sub_tasks']
-            //   $.get("Request.php", { li: '' },
-            //     function (data) {
-            //       const liItem = $(data)
-            //       for (let index = 0; index < subtasks.length; index++) {
-            //         const subtask = subtasks[index]
-            //         let el = liItem.clone()
-            //         el.find('.display-view span').text(subtask[0])
-            //         if (subtask[1] == 0) {
-            //           el.addClass("done")
-            //           el.find('.checkBox').addClass('checked')
-            //         }
-            //         ul.append(el)
-            //       }
-            //     },
-            //     "text"
-            //   )
-            // }
+
+            $.get("subtask/" + task_id,
+              function (subtasks) {
+                console.log(subtasks)
+                if (subtasks.length > 0) {
+                  $.get("subtaskItem",
+                    function (subtaskItem) {
+                      const liItem = $(subtaskItem)
+                      for (let index = 0; index < subtasks.length; index++) {
+                        const subtask = subtasks[index]
+                        let el = liItem.clone()
+                        el.find('.display-view span').text(subtask[0])
+                        if (subtask[1] == 0) {
+                          el.addClass("done")
+                          el.find('.checkBox').addClass('checked')
+                        }
+                        ul.append(el)
+                      }
+                    },
+                    "text"
+                  )
+                }
+              },
+              "json"
+            );
+            
           },
           "json"
         );
@@ -456,21 +463,22 @@ $(document).ready(function () {
         let taskItem_id = $('.selected').attr('rel')
         let subtaskTitle = $(this).val()
         let ul = $(this).parents('.subtasks').children('ul')
+
         $.ajaxSetup({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           }
         })
+
         if ($(this).val() != '') {
-          $.post("subtask", { _method: "POST", title: subtaskTitle },
+          $.post("subtask", { _method: "POST", title: subtaskTitle, taskItem_id: taskItem_id },
             function (id) {
               console.log(id)
-              let subtask
               $.get("subtaskItem",
                 function (subtaskItem) {
-                  subtask = $(subtaskItem)
+                  let subtask = $(subtaskItem)
                   subtask.find('.display-view span').text(subtaskTitle)
-                  subtask.find('.section-item.subtask').attr("rel", id)
+                  subtask.attr("rel", id)
                   ul.append(subtask)
                 },
                 "html"

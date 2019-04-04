@@ -27,6 +27,8 @@ Route::get('tasks/{list_id}', function ($list_id) {
 
 Route::resource('task', 'TaskController');
 
+Route::get('subtask/{task_id}', 'SubtaskController@index');
+Route::resource('subtask', 'SubtaskController');
 
 Auth::routes();
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Subtask;
+use App\Models\Subtask;
 use Illuminate\Http\Request;
 
 class SubtaskController extends Controller
@@ -12,9 +12,10 @@ class SubtaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($task_id)
     {
-        //
+        $subtasks = Subtask::where('task_id', $task_id)->get();
+        return $subtasks->toJson();
     }
 
     /**
@@ -37,6 +38,7 @@ class SubtaskController extends Controller
     {
         $subtask = new Subtask();
         $subtask->title = $request->title;
+        $subtask->task_id = $request->taskItem_id;
         $subtask->save();
         return $subtask->id;
     }

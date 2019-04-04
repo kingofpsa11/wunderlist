@@ -10,8 +10,17 @@ class Task extends Model
 
     public $timestamps = true;
 
+    protected $attributes = [
+        'status' => 1
+    ];
+
     public function list_tasks()
     {
         return $this->belongsTo('App\Models\ListTask');
+    }
+
+    public function subtasks()
+    {
+        return $this->hasMany('App\Models\Subtask');
     }
 }
