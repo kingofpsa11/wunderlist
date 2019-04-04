@@ -1,5 +1,10 @@
 $(document).ready(function () {
-
+  
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  })
     //Display user settings
     $('.user').click(function (e) {
       e.preventDefault();
@@ -39,12 +44,6 @@ $(document).ready(function () {
       if ($('.listOptions-title').length) {
         let title = $('.listOptions-title').val()
         if (title != '') {
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          })
-
           $.post("list", { title: title, _method: "POST" },
             function (sidebar) {
               let sidebarItem = $.parseHTML(sidebar)
@@ -88,11 +87,7 @@ $(document).ready(function () {
     //Add more task
     $('.addTask-input.chromeless').on("keydown", function (e) {
       if (e.keyCode == 13) {
-        $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        })
+        
         let title = $(this).val()
         const list_task_id = $('.sidebarItem.active').attr('rel')
         let taskItem = $('ol.tasks:first .taskItem:first').clone()
@@ -124,12 +119,6 @@ $(document).ready(function () {
       let taskItem = $(this).parents('.taskItem')
       let id = taskItem.attr('rel')
 
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      })
-
       $.post("task/" + id, { _method: "PUT" },
         function (data) {
           if (taskItem.hasClass("done")) {
@@ -154,12 +143,6 @@ $(document).ready(function () {
         $('.selected').removeClass('selected')
         $(this).addClass('selected')
         
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        })
-
         $.get("task/" + task_id, { _method: "GET" },
           function (task) {
             //title
@@ -178,27 +161,9 @@ $(document).ready(function () {
 
             $.get("subtask/" + task_id,
               function (subtasks) {
-                console.log(subtasks)
-                if (subtasks.length > 0) {
-                  $.get("subtaskItem",
-                    function (subtaskItem) {
-                      const liItem = $(subtaskItem)
-                      for (let index = 0; index < subtasks.length; index++) {
-                        const subtask = subtasks[index]
-                        let el = liItem.clone()
-                        el.find('.display-view span').text(subtask[0])
-                        if (subtask[1] == 0) {
-                          el.addClass("done")
-                          el.find('.checkBox').addClass('checked')
-                        }
-                        ul.append(el)
-                      }
-                    },
-                    "text"
-                  )
-                }
+                  ul.html(subtasks)
               },
-              "json"
+              "html"
             );
             
           },
@@ -249,11 +214,6 @@ $(document).ready(function () {
       //Check completed tasks
       const taskItem = $(this)
       contextmenu.off('click').on('click', '.context-menu-item:first', function () {
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        })
 
         let id = taskItem.attr("rel")
         $.post("task/" + id, { _method: "PUT" },
@@ -335,12 +295,6 @@ $(document).ready(function () {
           detail_date = year + '-' + ('0' + month).slice(-2) + '-' + ( '0' + day).slice(-2)
 
           let id = $('.selected').attr("rel")
-
-          $.ajaxSetup({
-            headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-          })
 
           $.post("task/" + id, { datepicker: detail_date, _method: "PUT" },
             function () {
@@ -464,25 +418,10 @@ $(document).ready(function () {
         let subtaskTitle = $(this).val()
         let ul = $(this).parents('.subtasks').children('ul')
 
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        })
-
         if ($(this).val() != '') {
           $.post("subtask", { _method: "POST", title: subtaskTitle, taskItem_id: taskItem_id },
-            function (id) {
-              console.log(id)
-              $.get("subtaskItem",
-                function (subtaskItem) {
-                  let subtask = $(subtaskItem)
-                  subtask.find('.display-view span').text(subtaskTitle)
-                  subtask.attr("rel", id)
-                  ul.append(subtask)
-                },
-                "html"
-              )
+            function (newSubtask) {
+              ul.append(newSubtask)
             },
             "html"
           );
@@ -496,10 +435,9 @@ $(document).ready(function () {
   
     //Check complete subtask
     $('.subtasks').on("click", '.checkBox', function () {
-      let taskId = $('.selected').attr("rel")
-      let title = $(this).parent(".subtask").find("display-view").text()
+      let subtask_id = $('.selected').attr("rel")
       let checkBox = $(this)
-      $.post("Request.php", { changeStatusSubtask: taskId, subtaskTitle: title },
+      $.post("subtask/" + subtask_id, { _method: "PUT", action: 'changeStatus'},
         function () {
           checkBox.toggleClass("checked")
           checkBox.parents('.subtask').toggleClass("done")

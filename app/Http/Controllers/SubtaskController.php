@@ -15,7 +15,12 @@ class SubtaskController extends Controller
     public function index($task_id)
     {
         $subtasks = Subtask::where('task_id', $task_id)->get();
-        return $subtasks->toJson();
+        $view = '';
+        foreach ($subtasks as $subtask) {
+            // var_dump($subtask->status==1);
+            $view .= view('components.detail.subtask')->with('subtask', $subtask);
+        }
+        return $view;
     }
 
     /**
@@ -40,7 +45,7 @@ class SubtaskController extends Controller
         $subtask->title = $request->title;
         $subtask->task_id = $request->taskItem_id;
         $subtask->save();
-        return $subtask->id;
+        return view('components.detail.subtask')->with('subtask', $subtask);
     }
 
     /**
@@ -74,7 +79,10 @@ class SubtaskController extends Controller
      */
     public function update(Request $request, Subtask $subtask)
     {
-        //
+        if ($request->action === 'changeStatus') {
+            $subtask->status = $subtask->status==1 ? 0 : 1;
+            $subtask->save();
+        }
     }
 
     /**

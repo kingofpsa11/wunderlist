@@ -32,6 +32,9 @@ Route::resource('subtask', 'SubtaskController');
 
 Auth::routes();
 
+Route::get('user', function () {
+    return Auth::user()->name;
+});
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('modal/{name}', function ($name) {
     if ($name == 'addList') {
@@ -51,6 +54,3 @@ Route::get('taskItemCompleted/{id}', function ($id) {
     return view('components.tasks.completedtask')->with('task', $task);
 });
 
-Route::get('subtaskItem', function(){
-    return view('components.detail.subtask');
-});

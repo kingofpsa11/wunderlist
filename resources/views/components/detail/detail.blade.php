@@ -180,7 +180,13 @@
             </a>
             <div class="comments">
                 <div class="comments-bottom">
-                    <div class="last-comment hidden"></div>
+                    <div class="last-comment hidden">
+                        @if (isset($comment))
+                            @component('components.detail.sectionItemComment', ['comment' => $comment, 'user' => Auth::user()])
+                                
+                            @endcomponent    
+                        @endif
+                    </div>
                     <div class="comments-add">
                         <div class="input-fake">
                             <div class="expandingArea active">

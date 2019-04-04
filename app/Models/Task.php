@@ -23,4 +23,9 @@ class Task extends Model
     {
         return $this->hasMany('App\Models\Subtask');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

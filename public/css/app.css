@@ -13385,6 +13385,7 @@ a.text-dark:focus {
   border: none;
   font-family: "Lato", "Geneva CY", "Lucida Grande", "Arial Unicode MS", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   padding: 0;
+  margin: 0;
 }
 
 .background-06 .main-interface #detail .inner .body .subtasks .section-content .expandingArea textarea {
