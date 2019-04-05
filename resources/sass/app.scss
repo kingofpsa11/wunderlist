@@ -1007,6 +1007,29 @@ $overdue-color: #b3312d;
                             }
                         }
                     }
+                    .section-content{
+                        .expandingArea{
+                            position: relative;
+                            textarea,pre{
+                                border: none;
+                                font-family: $font-stack;
+                                padding: 0;
+                                margin: 0;
+                            }
+                            textarea{
+                                resize: none;
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                box-sizing: border-box;
+                            }
+                        }
+                    }
+                    .display-view{
+                        color: #262626;
+                    }
                     .subtasks{
                         .section-icon{
                             .checkBox{
@@ -1053,6 +1076,13 @@ $overdue-color: #b3312d;
                         & .done .section-content .display-view{
                             text-decoration: line-through;
                             color: #9fa2a6;
+                        }
+                    }
+                    .comments-list{
+                        .section-content{
+                            .comment-author{
+                                font-weight: bold;
+                            }
                         }
                     }
                 }

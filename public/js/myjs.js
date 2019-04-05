@@ -146,7 +146,7 @@ $(document).ready(function () {
         $.get("task/" + task_id, { _method: "GET" },
           function (task) {
             //title
-            $('#detail .top .display-view').text(task['title'])
+            $('#detail .top .title-container .display-view').text(task['title'])
 
             //duedate
             let due_date = (new Date(task['duedate'])).getTime()
@@ -156,16 +156,32 @@ $(document).ready(function () {
             $('.detail-reminder .section-title').text(task['reminder_date'])
   
             //subtasks
-            const ul = $('.subtasks ul')
-            ul.html('')
+            const listSubtasks = $('.subtasks ul')
+            listSubtasks.html('')
 
             $.get("subtask/" + task_id,
               function (subtasks) {
-                  ul.html(subtasks)
+                listSubtasks.html(subtasks)
               },
               "html"
             );
-            
+
+            //note
+            $.get("note/" + task_id,
+              function (note) {
+                $('.section-item.note').html(note)
+              }
+            )
+
+            //comments
+            const listComments = $('.comments-list')
+            listComments.html('')
+            $.get("comment/" + task_id,
+              function (comments) {
+                listComments.append(comments)
+              },
+              "html"
+            );
           },
           "json"
         );
@@ -400,7 +416,7 @@ $(document).ready(function () {
     $('.subtasks ul').on('click', '.subtask .section-content', function () {
       $(this).find('.display-view').addClass('hidden')
       $(this).find('.edit-view').removeClass('hidden')
-      let valueOfSubtask = $(this).find('.display-view span').text()
+      let valueOfSubtask = $(this).find(' .display-view span').text()
       $(this).find('pre').text(valueOfSubtask)
       $(this).find('textarea').val(valueOfSubtask)
       $(this).find('textarea').focus()
@@ -483,5 +499,23 @@ $(document).ready(function () {
         cache: false,
         contentType: false,
       })
+    })
+
+    //Add a comment
+    $('.comments-add textarea').on('keypress', function(e){
+      if (e.keyCode === 13) {
+        let content = $(this).val()
+        let ul = $('.comments-list')
+        let task_id = $('.taskItem.selected').attr('rel')
+        $.ajax({
+          type: "POST",
+          url: "comment",
+          data: {content: content, _method: 'POST', task_id: task_id},
+          dataType: 'html',
+          success: function (comment) {
+            ul.append(comment)
+          }
+        });
+      }
     })
   })

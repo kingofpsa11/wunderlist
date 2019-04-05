@@ -30,6 +30,8 @@ Route::resource('task', 'TaskController');
 Route::get('subtask/{task_id}', 'SubtaskController@index');
 Route::resource('subtask', 'SubtaskController');
 
+Route::get('comment/{task_id}', 'CommentController@index');
+Route::resource('comment', 'CommentController');
 Auth::routes();
 
 Route::get('user', function () {
