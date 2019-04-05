@@ -1078,6 +1078,27 @@ $overdue-color: #b3312d;
                             color: #9fa2a6;
                         }
                     }
+                    .note{
+                        box-sizing: border-box;
+                        height: auto;
+                        .section-icon{
+                            align-self: flex-start;
+                        }
+                        .section-content{
+                            align-self: flex-start;
+                            .note-body{
+                                height: auto;
+                                textarea{
+                                    position: relative;
+                                    min-height: 100px!important;
+                                }
+                            }
+                        }
+                        .section-attachments{
+                            align-self: flex-start;
+                        }
+                        
+                    }
                     .comments-list{
                         .section-content{
                             .comment-author{

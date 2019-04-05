@@ -13433,6 +13433,32 @@ a.text-dark:focus {
   color: #9fa2a6;
 }
 
+.background-06 .main-interface #detail .inner .body .note {
+  box-sizing: border-box;
+  height: auto;
+}
+
+.background-06 .main-interface #detail .inner .body .note .section-icon {
+  align-self: flex-start;
+}
+
+.background-06 .main-interface #detail .inner .body .note .section-content {
+  align-self: flex-start;
+}
+
+.background-06 .main-interface #detail .inner .body .note .section-content .note-body {
+  height: auto;
+}
+
+.background-06 .main-interface #detail .inner .body .note .section-content .note-body textarea {
+  position: relative;
+  min-height: 100px !important;
+}
+
+.background-06 .main-interface #detail .inner .body .note .section-attachments {
+  align-self: flex-start;
+}
+
 .background-06 .main-interface #detail .inner .body .comments-list .section-content .comment-author {
   font-weight: bold;
 }

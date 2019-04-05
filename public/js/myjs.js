@@ -170,7 +170,8 @@ $(document).ready(function () {
             $.get("note/" + task_id,
               function (note) {
                 $('.section-item.note').html(note)
-              }
+              },
+              "html"
             )
 
             //comments
@@ -460,7 +461,33 @@ $(document).ready(function () {
         }
       );
     });
-  
+    
+    //Add note
+    $('.note').on('click', function () {
+      $(this).find('.note-add').addClass('hidden')
+      $(this).find('.note-body').removeClass('hidden')
+      $(this).find('.edit-view').removeClass('hidden')
+      $(this).find('.display-view').addClass('hidden')
+      let content = $(this).find('.display-view span').text().trim()
+      if (content != '') {
+        $(this).find('textarea').val(content)  
+      }
+      $(this).find('textarea').focus()
+    })
+
+    $('.note textarea').on('focusout', function () {
+      let content = $(this).val()
+      let task_id = $('.taskItem.selected').attr('rel')
+      $.ajax({
+        type: "POST",
+        url: "note",
+        data: { content: content, _method: 'POST', task_id: task_id},
+        success: function (noteContent) {
+          $('.note').html(noteContent)
+        }
+      });
+
+    })
     //Click to logout
     $('.logout').on('click', function (e) {
       document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC";

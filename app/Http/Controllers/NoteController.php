@@ -14,8 +14,8 @@ class NoteController extends Controller
      */
     public function index($task_id)
     {
-        $note = Note::where('task_id', $task_id)->get();
-        return view('components.detail.note')->with('note', $note);
+        $note = Note::where('task_id', $task_id)->first();
+        return view('components.detail.note')->with(['note'=> $note]);
     }
 
     /**
