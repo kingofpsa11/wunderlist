@@ -230,7 +230,7 @@ $(document).ready(function () {
 
       //Check completed tasks
       const taskItem = $(this)
-      contextmenu.off('click').on('click', '.context-menu-item:first', function () {
+      contextmenu.c('click').on('click', '.context-menu-item:first', function () {
 
         let id = taskItem.attr("rel")
         $.post("task/" + id, { _method: "PUT" },
@@ -475,7 +475,10 @@ $(document).ready(function () {
       $(this).find('textarea').focus()
     })
 
-    $('.note textarea').on('focusout', function () {
+    console.log($('.note textarea'))
+    
+    $('.note textarea').blur(function () {
+      console.log("1234");
       let content = $(this).val()
       let task_id = $('.taskItem.selected').attr('rel')
       $.ajax({

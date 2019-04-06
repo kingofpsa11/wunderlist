@@ -15,10 +15,12 @@ class ListTableSeeder extends Seeder
         DB::table('list_tasks')->insert(
             [
                 [
+                    'id' => 1,
                     'title' => 'Inbox',
                     'user_id' => 1
                 ],
                 [
+                    'id' => 2,
                     'title' => 'Work',
                     'user_id' => 1
                 ]
