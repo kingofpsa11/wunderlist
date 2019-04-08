@@ -26,8 +26,8 @@ class HomeController extends Controller
     public function index()
     {
         // return view('home');
-        $tasks = Task::all();
-        $lists = ListTask::all();
+        $tasks = Task::where('list_task_id', 1)->get();
+        $lists = ListTask::where('id', '>', 1)->get();
         return view('index')->with(['lists' => $lists, 'tasks' => $tasks]);
     }
 }

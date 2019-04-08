@@ -33,4 +33,9 @@ class Task extends Model
     {
         return $this->hasOne('App\Models\Note');
     }
+
+    public function files()
+    {
+        return $this->hasMany('App\Models\File');
+    }
 }

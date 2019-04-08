@@ -13251,6 +13251,22 @@ a.text-dark:focus {
   z-index: 5;
 }
 
+.background-06 .main-interface #detail .inner .top a.detail-checkbox svg.detail-check {
+  display: block;
+}
+
+.background-06 .main-interface #detail .inner .top a.detail-checkbox svg.detail-checked {
+  display: none;
+}
+
+.background-06 .main-interface #detail .inner .top a.checked svg.detail-check {
+  display: none;
+}
+
+.background-06 .main-interface #detail .inner .top a.checked svg.detail-checked {
+  display: block;
+}
+
 .background-06 .main-interface #detail .inner .top a.detail-star .star-wrapper {
   position: absolute;
   height: 49px;
@@ -13325,6 +13341,7 @@ a.text-dark:focus {
   font-size: 15px;
   line-height: 20px;
   color: #9fa2a6;
+  padding: 6px 0;
 }
 
 .background-06 .main-interface #detail .inner .body .section-item .section-delete {
@@ -13448,6 +13465,7 @@ a.text-dark:focus {
 
 .background-06 .main-interface #detail .inner .body .note .section-content .note-body {
   height: auto;
+  padding: 6px 0;
 }
 
 .background-06 .main-interface #detail .inner .body .note .section-content .note-body textarea {

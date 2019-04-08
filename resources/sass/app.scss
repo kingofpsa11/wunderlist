@@ -908,6 +908,20 @@ $overdue-color: #b3312d;
                             left: 18px;
                             cursor: pointer;
                             z-index: 5;
+                            svg.detail-check{
+                                display: block;
+                            }
+                            svg.detail-checked{
+                                display: none;
+                            }
+                        }
+                        &.checked{
+                            svg.detail-check{
+                                display: none;
+                            }
+                            svg.detail-checked{
+                                display: block;
+                            }
                         }
                         &.detail-star{
                             .star-wrapper{
@@ -977,6 +991,7 @@ $overdue-color: #b3312d;
                             font-size: 15px;
                             line-height: 20px;
                             color: #9fa2a6;
+                            padding: 6px 0;
                         }
                         .section-delete{
                             display: none;
@@ -1088,6 +1103,7 @@ $overdue-color: #b3312d;
                             align-self: flex-start;
                             .note-body{
                                 height: auto;
+                                padding: 6px 0;
                                 textarea{
                                     position: relative;
                                     min-height: 100px!important;

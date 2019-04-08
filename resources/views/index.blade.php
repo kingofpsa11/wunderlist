@@ -48,7 +48,7 @@
 
         <div id="tasks">
             <div id="list-toolbar">
-                <h1 class="title">{{ $lists->first()->title }}</h1>
+                <h1 class="title">Inbox</h1>
                 <div class="actionBar">
                     <div class="actionBar-top">
                         <ul class="actionBar-top-sort active">

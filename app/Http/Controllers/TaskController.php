@@ -37,8 +37,7 @@ class TaskController extends Controller
     {
         $task = new Task();
         $task->title = $request->title;
-        $task->list_task_id = (int)$request->list_task_id;
-        $task->status = 1;
+        $task->list_task_id = $request->list_task_id;
         $task->save();
         return $task->id;
 

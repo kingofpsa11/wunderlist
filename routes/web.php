@@ -1,6 +1,5 @@
 <?php
-use App\Models\ListTask;
-
+use App\Models\Task;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,9 +19,22 @@ Route::get('sidebar', function () {
 
 Route::resource('list', 'ListTaskController');
 
-Route::get('tasks/{list_id}', function ($list_id) {
-    $tasks = Task::where('list_task_id', $list_id)->get();
-    return $tasks->toJson();
+Route::get('uncompletedTasks/{list_id}', function ($list_id) {
+    $uncompletedTasks = Task::where('list_task_id', $list_id)->where('status', 1)->get();
+    $view = '';
+    foreach ($uncompletedTasks as $uncompletedTask) {
+        $view .= view('components.tasks.task')->with('task', $uncompletedTask);
+    }
+    return $view;
+});
+
+Route::get('completedTasks/{list_id}', function ($list_id) {
+    $completedTasks = Task::where('list_task_id', $list_id)->where('status', 0)->get();
+    $view = '';
+    foreach ($completedTasks as $completedTask) {
+        $view .= view('components.tasks.completedtask')->with('task', $completedTask);
+    }
+    return $view;
 });
 
 Route::resource('task', 'TaskController');
@@ -35,6 +47,8 @@ Route::resource('comment', 'CommentController');
 
 Route::get('note/{task_id}', 'NoteController@index');
 Route::resource('note', 'NoteController');
+
+Route::resource('file', 'FileController');
 
 Auth::routes();
 

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
+use App\Models\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class NoteController extends Controller
+class FileController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($task_id)
+    public function index()
     {
-        $note = Note::where('task_id', $task_id)->first();
-        return view('components.detail.note')->with(['note'=> $note]);
+        //
     }
 
     /**
@@ -36,30 +36,35 @@ class NoteController extends Controller
      */
     public function store(Request $request)
     {
-        $note = new Note();
-        $note->content = $request->input('content');
-        $note->task_id = $request->input('task_id');
-        $note->save();
+        $file = new File();
+        $file->task_id = $request->input('task_id');
+        $fileItem = $request->file('file');
+        $fileTarget = $fileItem->getClientOriginalName();
+        $file->file = $fileItem->storeAs('public', $fileTarget);
+        $file->save();
+        $file->extension = $fileItem->getClientOriginalExtension();
+        return view('components.detail.file')->with('file', $file);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Note  $note
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(Note $note)
+    public function show(File $file)
     {
-        //
+        $file->extension = 'png';
+        return $file->toJson();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Note  $note
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function edit(Note $note)
+    public function edit(File $file)
     {
         //
     }
@@ -68,10 +73,10 @@ class NoteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Note  $note
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Note $note)
+    public function update(Request $request, File $file)
     {
         //
     }
@@ -79,10 +84,10 @@ class NoteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Note  $note
+     * @param  \App\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Note $note)
+    public function destroy(File $file)
     {
         //
     }
