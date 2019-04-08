@@ -13360,6 +13360,50 @@ a.text-dark:focus {
   fill: #737272;
 }
 
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-preview {
+  width: 40px;
+  height: 40px;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-preview .file-extension {
+  background: #63b4be;
+  color: #fafafa;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  padding-top: 15px;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-info {
+  flex: 1;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-info .file-name {
+  display: block;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: bold;
+  color: #262626;
+  white-space: nowrap;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-info .file-meta {
+  display: flex;
+  color: #737272;
+}
+
+.background-06 .main-interface #detail .inner .body .section-item .section-content-file .file-info .file-meta .ago {
+  font-size: 10px;
+}
+
 .background-06 .main-interface #detail .inner .body .section-item.date .section-title {
   color: #328ad6;
 }

@@ -48,6 +48,7 @@ Route::resource('comment', 'CommentController');
 Route::get('note/{task_id}', 'NoteController@index');
 Route::resource('note', 'NoteController');
 
+Route::get('file/{task_id}', 'FileController@index');
 Route::resource('file', 'FileController');
 
 Auth::routes();

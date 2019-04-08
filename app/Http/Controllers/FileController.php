@@ -13,9 +13,18 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($task_id)
     {
-        //
+        $files = File::where('task_id', $task_id)->get();
+        $view = '';
+        foreach ($files as $file) {
+            $extension = explode('.', $file->file);
+            $file->extension = $extension[1];
+            $name = explode('/', $file->file);
+            $file->name = $name[1];
+            $view .= view('components.detail.file')->with(['file' => $file]);
+        }
+        return $view;
     }
 
     /**
@@ -43,6 +52,7 @@ class FileController extends Controller
         $file->file = $fileItem->storeAs('public', $fileTarget);
         $file->save();
         $file->extension = $fileItem->getClientOriginalExtension();
+        $file->name = $fileTarget;
         return view('components.detail.file')->with('file', $file);
     }
 

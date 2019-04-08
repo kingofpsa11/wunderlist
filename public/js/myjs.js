@@ -199,6 +199,13 @@ $(document).ready(function () {
               "html"
             );
 
+            //file
+            $.get('file/' + task_id,
+                function (file) {
+                  $('ul.files-list').html(file);
+                }
+            );
+
             //comments
             const listComments = $('.comments-list');
             listComments.html('');

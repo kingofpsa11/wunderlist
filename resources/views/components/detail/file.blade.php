@@ -2,12 +2,12 @@
     <div class="section-icon"></div>
     <div class="section-content section-content-file">
         <div class="file-preview">
-            <img class="file-image" src="">
+            <img class="file-image hidden" src="">
             <div class="file-extension">{{ $file->extension }}</div>
         </div>
         <div class="file-info">
-            <a class="file-name">{{ $file->file }}</a>
-            <div class="file-progress">
+            <a class="file-name">{{ $file->name }}</a>
+            <div class="file-progress hidden">
                 <div class="bar" style="width: 100%;"></div>
             </div>
             <div class="file-meta" title="a few seconds ago">
@@ -17,7 +17,7 @@
                     </div>
                 </span>
                 <span class="ago">{{ $file->created_at }}</span>
-                <span class="waiting">
+                <span class="waiting hidden">
                     <text rel="upload_file_not_synced_yet">Not Synced</text>
                 </span>
             </div>
